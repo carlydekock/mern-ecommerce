@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: '1',
     name: 'Tent',
     image: '/images/tent.png',
     description:
@@ -13,7 +12,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: '2',
     name: 'Sleeping Bag',
     image: '/images/sleeping-bag.png',
     description:
@@ -26,7 +24,6 @@ const products = [
     numReviews: 4,
   },
   {
-    _id: '3',
     name: 'Sleeping Pad',
     image: '/images/sleeping-pad.png',
     description:
@@ -39,7 +36,6 @@ const products = [
     numReviews: 3,
   },
   {
-    _id: '4',
     name: 'Camping Chair',
     image: '/images/chair.png',
     description:
@@ -52,7 +48,6 @@ const products = [
     numReviews: 3,
   },
   {
-    _id: '5',
     name: 'Headlamp',
     image: '/images/headlamp.png',
     description:
@@ -65,7 +60,6 @@ const products = [
     numReviews: 2,
   },
   {
-    _id: '6',
     name: 'First Aid Kit',
     image: '/images/first-aid-kit.png',
     description:
