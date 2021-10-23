@@ -17,8 +17,8 @@ const orderSchema = mongoose.Schema(
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           ref: 'Product',
-        }
-      }
+        },
+      },
     ],
     shippingAddress: {
       address: { type: String, required: true },
@@ -68,8 +68,9 @@ const orderSchema = mongoose.Schema(
       type: Date,
     },
   }, {
-  timestamps: true
-});
+    timestamps: true,
+  },
+);
 
 const Order = mongoose.model('Order', orderSchema);
 
