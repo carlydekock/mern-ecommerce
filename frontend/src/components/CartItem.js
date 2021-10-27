@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Image, } from 'react-bootstrap';
+import { Row, Col, Image, Button, Form } from 'react-bootstrap';
 
 const CartItem = ({ item, handleQtyChange, handleDelete }) => {
   return (
@@ -12,18 +12,18 @@ const CartItem = ({ item, handleQtyChange, handleDelete }) => {
         <Col md={3}>
           <Link to={`/product/${item.product}`} className="CartItem-name">{item.name}</Link>
         </Col>
-        <Col md={2}>${item.price}</Col>
+        <Col md={2}>${item.price.toFixed(2)}</Col>
         <Col md={2}>
-          <select className="CartItem-select" value={item.qty} onChange={(e) => handleQtyChange(item.product, e.target.value)}>
-            {[...Array(item.countInStock).keys()].map(element => (
+          <Form.Select value={item.qty} onChange={(e) => handleQtyChange(item.product, e.target.value)}>
+          {[...Array(item.countInStock).keys()].map(element => (
               <option key={element + 1} value={element + 1}>{element + 1}</option>
             ))}
-          </select>
+          </Form.Select>
         </Col>
         <Col md={2}>
-          <button className="CartItem-delete" onClick={() => handleDelete(item.product)}>
+          <Button type="button" variant="light" onClick={() => handleDelete(item.product)}>
             <i className="fas fa-trash"></i>
-          </button>
+          </Button>
         </Col>
       </Row>
     </div>
