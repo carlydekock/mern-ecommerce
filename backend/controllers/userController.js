@@ -6,7 +6,7 @@ import User from '../models/userModel.js';
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email: email });
-  if(user && (await user.matchPassword(password))){
+  if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
       name: user.name,
@@ -23,7 +23,7 @@ const authUser = asyncHandler(async (req, res) => {
 //GET user profile info, GET /api/users/profile, access: private
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = req.user;
-  if(user){
+  if (user) {
     res.json({
       _id: user._id,
       name: user.name,
@@ -36,12 +36,35 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+//PUT user profile info, PUT /api/users/profile, access: private
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = req.user;
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
-  const userExists = await User.findOne({email});
+  const userExists = await User.findOne({ email });
 
-  if(userExists){
+  if (userExists) {
     res.status(400);
     throw new Error('User already exists');
   }
@@ -52,7 +75,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password,
   });
 
-  if(user){
+  if (user) {
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -69,5 +92,6 @@ const registerUser = asyncHandler(async (req, res) => {
 export {
   authUser,
   getUserProfile,
+  updateUserProfile,
   registerUser,
 };
