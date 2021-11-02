@@ -7,7 +7,12 @@ import { logout } from '../redux/actions/userActions';
 const Header = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector(state => state.userLogin);
+  const cart = useSelector(state => state.cart);
   const { userInfo } = userLogin;
+
+  const getCartCount = () => {
+    return cart.cartItems.reduce((qty, item) => qty + Number(item.qty), 0);
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -24,7 +29,7 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
-                <Nav.Link><i className="fas fa-shopping-cart"></i>Cart</Nav.Link>
+                <Nav.Link><i className="fas fa-shopping-cart"></i> Cart ({getCartCount()})</Nav.Link>
               </LinkContainer>
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
