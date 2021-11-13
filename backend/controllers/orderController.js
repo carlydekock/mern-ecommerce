@@ -29,6 +29,19 @@ const createOrder = asyncHandler(async(req, res) => {
 });
 
 
+//Get order by id, GET /api/orders/:id, access:private
+const getOrderById = asyncHandler(async(req, res) => {
+  const order = await Order.findById(req.params.id).populate('user', 'name email');
+
+  if(order && (req.user.isAdmin || order.user._id.equals(req.user._id))){
+    res.json(order);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 export {
   createOrder,
+  getOrderById,
 };
