@@ -89,9 +89,17 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+//GET users, GET /api/users, access: private/admin
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  res.json(users);
+});
+
 export {
   authUser,
   getUserProfile,
   updateUserProfile,
   registerUser,
+  getUsers,
 };
