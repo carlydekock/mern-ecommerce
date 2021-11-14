@@ -8,6 +8,7 @@ import Message from '../components/Message';
 import Loader from '../components/CheckoutSteps';
 import { getOrderDetails, payOrder } from '../redux/actions/orderActions';
 import { ORDER_PAY_RESET } from '../redux/constants/orderConstants';
+import { emptyCartItems } from '../redux/actions/cartActions';
 
 const OrderDetailsScreen = ({match}) => {
   const orderId = match.params.id;
@@ -47,7 +48,8 @@ const OrderDetailsScreen = ({match}) => {
   }, [dispatch, order, orderId, successPay]);
 
   const handleSuccessPayment = (paymentResult) => {
-    dispatch(payOrder(orderId, paymentResult))
+    dispatch(payOrder(orderId, paymentResult));
+    emptyCartItems();
   }
 
   return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : <>

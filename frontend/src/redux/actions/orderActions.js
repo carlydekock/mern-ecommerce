@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_PAY_SUCCESS, ORDER_PAY_REQUEST, ORDER_PAY_FAIL, ORDER_MY_LIST_REQUEST, ORDER_MY_LIST_SUCCESS, ORDER_MY_LIST_FAIL} from '../constants/orderConstants.js';
+import { CART_RESET } from '../constants/cartConstants.js';
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
@@ -19,7 +20,11 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: ORDER_CREATE_SUCCESS,
       payload: data
     });
-  
+    dispatch({
+      type: CART_RESET,
+      payload: data
+    })
+    localStorage.removeItem('cartItems');
   } catch(error){
       dispatch({
         type: ORDER_CREATE_FAIL,
