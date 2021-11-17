@@ -71,9 +71,34 @@ const getUserOrders = asyncHandler(async(req, res) => {
   res.json(orders);
 });
 
+//Get all orders, GET /api/orders
+const getAllOrders = asyncHandler(async(req, res) => {
+  const orders = await Order.find({}).populate('user', 'id name');
+
+  res.json(orders);
+});
+
+//Update order to delivered, GET /api/orders/:id/delivered, access:private
+const updateOrderToDelivered = asyncHandler(async(req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if(order && (req.user.isAdmin || order.user._id.equals(req.user._id))){
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+    
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 export {
   createOrder,
   getOrderById,
   updateOrderToPaid,
   getUserOrders,
+  getAllOrders,
+  updateOrderToDelivered,
 };
