@@ -47,7 +47,7 @@ const ProductScreen = ({ history, match }) => {
 
   return (
     <div>
-      <Link className='btn btn-light my-3' to='/'>Go Back</Link>
+      <Link className='btn btn-light my-3' to='/'>⬅ Go Back</Link>
       {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (
         <>
         <Row>
